@@ -20,16 +20,16 @@ This repo constains the pytorch implementation for the CVPR2018 unsupervised lea
 
 ## Pretrained Model
 
-Currently, we provides pretrained models of ResNet 18 and ResNet 50. Each tar ball contains the feature representation of all ImageNet training images (600 mb) and model weights (100-200mb).
+Currently, we provide pretrained models of ResNet 18 and ResNet 50. Each tar ball contains the feature representation of all ImageNet training images (600 mb) and model weights (100-200mb).
 
 - [ResNet 18]() (top 1 accuracy 41.0% )
 - [ResNet 50]() (top 1 accuracy 46.8%)
 
 ## Usage
 
-Our code extends the pytorch implementation of imagenet classification in [official pytorch release](https://github.com/pytorch/examples/tree/master/imagenet).  Please refer to the official repo for details of data preparations and hardware configurations.
+Our code extends the pytorch implementation of imagenet classification in [official pytorch release](https://github.com/pytorch/examples/tree/master/imagenet).  Please refer to the official repo for details of data preparation and hardware configurations.
 
-- install [pytorch 0.3](http://pytorch.org)
+- install [pytorch==0.3](http://pytorch.org)
 
 - clone this repo: `git clone https://github.com/zhirongw/lemniscate.pytorch`
 
