@@ -28,7 +28,7 @@ from lib.utils import AverageMeter
 from test import NN, kNN
 
 parser = argparse.ArgumentParser(description='PyTorch CIFAR10 Training')
-parser.add_argument('--lr', default=0.1, type=float, help='learning rate')
+parser.add_argument('--lr', default=0.03, type=float, help='learning rate')
 parser.add_argument('--resume', '-r', default='', type=str, help='resume from checkpoint')
 parser.add_argument('--test-only', action='store_true', help='test only')
 parser.add_argument('--low-dim', default=128, type=int,
@@ -50,8 +50,8 @@ start_epoch = 0  # start from epoch 0 or last checkpoint epoch
 print('==> Preparing data..')
 transform_train = transforms.Compose([
     transforms.RandomResizedCrop(size=32, scale=(0.2,1.)),
-    transforms.RandomGrayscale(p=0.2),
     transforms.ColorJitter(0.4, 0.4, 0.4, 0.4),
+    transforms.RandomGrayscale(p=0.2),
     #transforms.RandomHorizontalFlip(),
     transforms.ToTensor(),
     transforms.Normalize((0.4914, 0.4822, 0.4465), (0.2023, 0.1994, 0.2010)),
@@ -104,7 +104,7 @@ if use_cuda:
     cudnn.benchmark = True
 
 if args.test_only:
-    acc = kNN(0, net, lemniscate, trainloader, testloader, use_cuda, 1)
+    acc = kNN(0, net, lemniscate, trainloader, testloader, 200, args.nce_t, 1)
     sys.exit(0)
 
 optimizer = optim.SGD(net.parameters(), lr=args.lr, momentum=0.9, weight_decay=5e-4)
@@ -113,7 +113,7 @@ def adjust_learning_rate(optimizer, epoch):
     """Sets the learning rate to the initial LR decayed by 10 every 30 epochs"""
     lr = args.lr
     if epoch >= 80:
-        lr = args.lr * (0.1 ** ((epoch-40) // 40))
+        lr = args.lr * (0.1 ** ((epoch-80) // 40))
     print(lr)
     for param_group in optimizer.param_groups:
         param_group['lr'] = lr
@@ -121,7 +121,7 @@ def adjust_learning_rate(optimizer, epoch):
 # Training
 def train(epoch):
     print('\nEpoch: %d' % epoch)
-    #adjust_learning_rate(optimizer, epoch)
+    adjust_learning_rate(optimizer, epoch)
     train_loss = AverageMeter()
     data_time = AverageMeter()
     batch_time = AverageMeter()
@@ -160,7 +160,7 @@ def train(epoch):
 
 for epoch in range(start_epoch, start_epoch+200):
     train(epoch)
-    acc = kNN(epoch, net, lemniscate, trainloader, testloader, use_cuda, 0)
+    acc = kNN(epoch, net, lemniscate, trainloader, testloader, 200, args.nce_t, 0)
 
     if acc > best_acc:
         print('Saving..')
@@ -176,3 +176,6 @@ for epoch in range(start_epoch, start_epoch+200):
         best_acc = acc
 
     print('best accuracy: {:.2f}'.format(best_acc*100))
+
+acc = kNN(0, net, lemniscate, trainloader, testloader, 200, args.nce_t, 1)
+print('last accuracy: {:.2f}'.format(acc*100))
