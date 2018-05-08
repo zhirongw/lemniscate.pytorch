@@ -1,6 +1,6 @@
 ## Unsupervised Feature Learning via Non-parameteric Instance Discrimination
 
-This repo constains the pytorch implementation for the CVPR2018 unsupervised learning paper.
+This repo constains the pytorch implementation for the CVPR2018 unsupervised learning paper [(arxiv)](https://arxiv.org/pdf/1805.01978.pdf).
 
 ```
 @inproceedings{unsupervised2018wu,
@@ -20,22 +20,25 @@ This repo constains the pytorch implementation for the CVPR2018 unsupervised lea
 
 ## Pretrained Model
 
-Currently, we provide pretrained models of ResNet 18 and ResNet 50. Each tar ball contains the feature representation of all ImageNet training images (600 mb) and model weights (100-200mb).
+Currently, we provide pretrained models of ResNet 18 and ResNet 50. 
+Each tar ball contains the feature representation of all ImageNet training images (600 mb) and model weights (100-200mb).
+You can also get these representations by forwarding the network for the entire ImageNet images.
 
-- [ResNet 18]() (top 1 accuracy 41.0% )
-- [ResNet 50]() (top 1 accuracy 46.8%)
+- [ResNet 18](http://zhirongw.westus2.cloudapp.azure.com/models/lemniscate_resnet18.pth.tar) (top 1 accuracy 41.0%)
+- [ResNet 50](http://zhirongw.westus2.cloudapp.azure.com/models/lemniscate_resnet50.pth.tar) (top 1 accuracy 46.8%)
 
 ## Usage
 
-Our code extends the pytorch implementation of imagenet classification in [official pytorch release](https://github.com/pytorch/examples/tree/master/imagenet).  Please refer to the official repo for details of data preparation and hardware configurations.
+Our code extends the pytorch implementation of imagenet classification in [official pytorch release](https://github.com/pytorch/examples/tree/master/imagenet). 
+Please refer to the official repo for details of data preparation and hardware configurations.
 
-- install [pytorch==0.3](http://pytorch.org)
+- install python2 and [pytorch=0.3](http://pytorch.org)
 
 - clone this repo: `git clone https://github.com/zhirongw/lemniscate.pytorch`
 
 - Training on ImageNet:
 
-  `python main.py DATAPATH --arch resnet18 --nce-k 4096 -nce-t 0.07  --lr 0.03 --nce-m --low-dim 128 -b 256 `
+  `python main.py DATAPATH --arch resnet18 --nce-k 4096 --nce-t 0.07  --lr 0.03 --nce-m 0.5 --low-dim 128 -b 256 `
 
   - parameter nce-k controls the number of negative samples. If nce-k sets to 0, the code also supports full softmax learning.
   - nce-t controls temperature of the distribution. 0.07-0.1 works well in practice.
@@ -49,4 +52,7 @@ Our code extends the pytorch implementation of imagenet classification in [offic
 
   `python main.py DATAPATH --arch resnet18 --resume input_model.pth.tar -e` runs testing with default K=200 neighbors.
 
+- Training on CIFAR10:
+
+  `python cifar.py --arch resnet18 --nce-k 0 --nce-t 0.07 --lr 0.03`
 
