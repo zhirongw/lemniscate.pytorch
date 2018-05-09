@@ -56,3 +56,8 @@ Please refer to the official repo for details of data preparation and hardware c
 
   `python cifar.py --arch resnet18 --nce-k 0 --nce-t 0.07 --lr 0.03`
 
+## Nearest Neighbor
+
+Please follow [this link](http://zhirongw.westus2.cloudapp.azure.com/nn.html) for a list of nearest neighbors on ImageNet.
+Results are visualized from our ResNet50 model, compared with raw image features and supervised features.
+First column is the query image, followed by 20 retrievals ranked by the similarity.
