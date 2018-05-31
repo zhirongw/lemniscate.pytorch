@@ -44,7 +44,7 @@ Please refer to the official repo for details of data preparation and hardware c
 
 - Training on ImageNet:
 
-  `python main.py DATAPATH --arch resnet18 --nce-k 4096 --nce-t 0.07  --lr 0.03 --nce-m 0.5 --low-dim 128 -b 256 `
+  `python main.py DATAPATH --arch resnet18 -j 32 --nce-k 4096 --nce-t 0.07  --lr 0.03 --nce-m 0.5 --low-dim 128 -b 256 `
 
   - parameter nce-k controls the number of negative samples. If nce-k sets to 0, the code also supports full softmax learning.
   - nce-t controls temperature of the distribution. 0.07-0.1 works well in practice.
@@ -60,6 +60,6 @@ Please refer to the official repo for details of data preparation and hardware c
 
 - Training on CIFAR10:
 
-  `python cifar.py --arch resnet18 --nce-k 0 --nce-t 0.07 --lr 0.03`
+  `python cifar.py --nce-k 0 --nce-t 0.07 --lr 0.03`
 
 
