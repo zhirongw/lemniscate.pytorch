@@ -60,6 +60,6 @@ Please refer to the official repo for details of data preparation and hardware c
 
 - Training on CIFAR10:
 
-  `python cifar.py --nce-k 0 --nce-t 0.07 --lr 0.03`
+  `python cifar.py --nce-k 0 --nce-t 0.1 --lr 0.03`
 
 
