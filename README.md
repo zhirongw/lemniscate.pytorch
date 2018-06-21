@@ -63,3 +63,9 @@ Please refer to the official repo for details of data preparation and hardware c
   `python cifar.py --nce-k 0 --nce-t 0.1 --lr 0.03`
 
 
+## Contact
+
+For any questions, please feel free to reach 
+```
+Zhirong Wu: xavibrowu@gmail.com
+```
