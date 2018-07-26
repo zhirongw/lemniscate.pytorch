@@ -7,7 +7,6 @@ import torch.nn as nn
 import torch.optim as optim
 import torch.nn.functional as F
 import torch.backends.cudnn as cudnn
-from torch.autograd import Variable
 
 import torchvision
 import torchvision.transforms as transforms
@@ -42,7 +41,7 @@ parser.add_argument('--nce-m', default=0.5, type=float,
 
 args = parser.parse_args()
 
-use_cuda = torch.cuda.is_available()
+device = 'cuda' if torch.cuda.is_available() else 'cpu'
 best_acc = 0  # best test accuracy
 start_epoch = 0  # start from epoch 0 or last checkpoint epoch
 
@@ -96,11 +95,12 @@ if hasattr(lemniscate, 'K'):
 else:
     criterion = nn.CrossEntropyLoss()
 
-if use_cuda:
-    net.cuda()
+
+net.to(device)
+lemniscate.to(device)
+criterion.to(device)
+if device == 'cuda':
     net = torch.nn.DataParallel(net, device_ids=range(torch.cuda.device_count()))
-    lemniscate.cuda()
-    criterion.cuda()
     cudnn.benchmark = True
 
 if args.test_only:
@@ -134,11 +134,9 @@ def train(epoch):
     end = time.time()
     for batch_idx, (inputs, targets, indexes) in enumerate(trainloader):
         data_time.update(time.time() - end)
-        if use_cuda:
-            inputs, targets, indexes = inputs.cuda(), targets.cuda(), indexes.cuda()
+        inputs, targets, indexes = inputs.to(device), targets.to(device), indexes.to(device)
         optimizer.zero_grad()
 
-        inputs, targets, indexes = Variable(inputs), Variable(targets), Variable(indexes)
         features = net(inputs)
         outputs = lemniscate(features, indexes)
         loss = criterion(outputs, indexes)
@@ -146,7 +144,7 @@ def train(epoch):
         loss.backward()
         optimizer.step()
 
-        train_loss.update(loss.data[0], inputs.size(0))
+        train_loss.update(loss.item(), inputs.size(0))
 
         # measure elapsed time
         batch_time.update(time.time() - end)
@@ -165,7 +163,7 @@ for epoch in range(start_epoch, start_epoch+200):
     if acc > best_acc:
         print('Saving..')
         state = {
-            'net': net.module if use_cuda else net,
+            'net': net.state_dict(),
             'lemniscate': lemniscate,
             'acc': acc,
             'epoch': epoch,
