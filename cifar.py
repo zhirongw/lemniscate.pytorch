@@ -70,38 +70,38 @@ testloader = torch.utils.data.DataLoader(testset, batch_size=100, shuffle=False,
 classes = ('plane', 'car', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse', 'ship', 'truck')
 ndata = trainset.__len__()
 
+print('==> Building model..')
+net = models.__dict__['ResNet18'](low_dim=args.low_dim)
+# define leminiscate
+if args.nce_k > 0:
+    lemniscate = NCEAverage(args.low_dim, ndata, args.nce_k, args.nce_t, args.nce_m)
+else:
+    lemniscate = LinearAverage(args.low_dim, ndata, args.nce_t, args.nce_m)
+
+if device == 'cuda':
+    net = torch.nn.DataParallel(net, device_ids=range(torch.cuda.device_count()))
+    cudnn.benchmark = True
+
 # Model
 if args.test_only or len(args.resume)>0:
     # Load checkpoint.
     print('==> Resuming from checkpoint..')
     assert os.path.isdir('checkpoint'), 'Error: no checkpoint directory found!'
     checkpoint = torch.load('./checkpoint/'+args.resume)
-    net = checkpoint['net']
+    net.load_state_dict(checkpoint['net'])
     lemniscate = checkpoint['lemniscate']
     best_acc = checkpoint['acc']
     start_epoch = checkpoint['epoch']
-else:
-    print('==> Building model..')
-    net = models.__dict__['ResNet18'](low_dim=args.low_dim)
-    # define leminiscate
-    if args.nce_k > 0:
-        lemniscate = NCEAverage(args.low_dim, ndata, args.nce_k, args.nce_t, args.nce_m)
-    else:
-        lemniscate = LinearAverage(args.low_dim, ndata, args.nce_t, args.nce_m)
-
+    
 # define loss function
 if hasattr(lemniscate, 'K'):
     criterion = NCECriterion(ndata)
 else:
     criterion = nn.CrossEntropyLoss()
 
-
 net.to(device)
 lemniscate.to(device)
 criterion.to(device)
-if device == 'cuda':
-    net = torch.nn.DataParallel(net, device_ids=range(torch.cuda.device_count()))
-    cudnn.benchmark = True
 
 if args.test_only:
     acc = kNN(0, net, lemniscate, trainloader, testloader, 200, args.nce_t, 1)
