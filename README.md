@@ -40,6 +40,8 @@ Please refer to the official repo for details of data preparation and hardware c
 
 - supports python27 and [pytorch=0.4](http://pytorch.org)
 
+- if you are looking for pytorch 0.3, please switch to tag v0.3
+
 - clone this repo: `git clone https://github.com/zhirongw/lemniscate.pytorch`
 
 - Training on ImageNet:
