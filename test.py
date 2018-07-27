@@ -27,8 +27,7 @@ def NN(epoch, net, lemniscate, trainloader, testloader, recompute_memory=0):
         trainloader.dataset.transform = testloader.dataset.transform
         temploader = torch.utils.data.DataLoader(trainloader.dataset, batch_size=100, shuffle=False, num_workers=1)
         for batch_idx, (inputs, targets, indexes) in enumerate(temploader):
-            inputs, targets = inputs.cuda(), targets.cuda()
-            inputs, targets = Variable(inputs, volatile=True), Variable(targets)
+            inputs, targets = inputs.to(device), targets.to(device)
             batchSize = inputs.size(0)
             features = net(inputs)
             trainFeatures[:, batch_idx*batchSize:batch_idx*batchSize+batchSize] = features.data.t()
@@ -88,8 +87,7 @@ def kNN(epoch, net, lemniscate, trainloader, testloader, K, sigma, recompute_mem
         trainloader.dataset.transform = testloader.dataset.transform
         temploader = torch.utils.data.DataLoader(trainloader.dataset, batch_size=100, shuffle=False, num_workers=1)
         for batch_idx, (inputs, targets, indexes) in enumerate(temploader):
-            inputs, targets = inputs.cuda(), targets.cuda()
-            inputs, targets = Variable(inputs, volatile=True), Variable(targets)
+            inputs, targets = inputs.to(device), targets.to(device)
             batchSize = inputs.size(0)
             features = net(inputs)
             trainFeatures[:, batch_idx*batchSize:batch_idx*batchSize+batchSize] = features.data.t()

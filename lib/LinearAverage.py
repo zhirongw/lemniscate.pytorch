@@ -8,20 +8,18 @@ class LinearAverageOp(Function):
     def forward(self, x, y, memory, params):
         T = params[0].item()
         batchSize = x.size(0)
-        outputSize = memory.size(1)
-        inputSize = memory.size(1)
 
         # inner product
         out = torch.mm(x.data, memory.t())
         out.div_(T) # batchSize * N
         
-        self.data_for_backward = x, memory, y, params 
+        self.save_for_backward(x, memory, y, params)
 
         return out
 
     @staticmethod
     def backward(self, gradOutput):
-        x, memory, y, params = self.data_for_backward
+        x, memory, y, params = self.saved_tensors
         batchSize = gradOutput.size(0)
         T = params[0].item()
         momentum = params[1].item()
