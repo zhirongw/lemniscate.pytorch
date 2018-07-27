@@ -3,7 +3,7 @@
 This repo constains the pytorch implementation for the CVPR2018 unsupervised learning paper [(arxiv)](https://arxiv.org/pdf/1805.01978.pdf).
 
 ```
-@inproceedings{unsupervised2018wu,
+@inproceedings{wu2018unsupervised2018,
   title={Unsupervised Feature Learning via Non-parametric Instance-level Discrimination},
   author={Wu, Zhirong and Xiong, Yuanjun and Yu, Stella and Lin, Dahua},
   booktitle={Computer Vision and Pattern Recognition (CVPR) 2018},
@@ -38,7 +38,7 @@ First column is the query image, followed by 20 retrievals ranked by the similar
 Our code extends the pytorch implementation of imagenet classification in [official pytorch release](https://github.com/pytorch/examples/tree/master/imagenet). 
 Please refer to the official repo for details of data preparation and hardware configurations.
 
-- install python2 and [pytorch=0.3](http://pytorch.org)
+- supports python27 and [pytorch=0.4](http://pytorch.org)
 
 - clone this repo: `git clone https://github.com/zhirongw/lemniscate.pytorch`
 
