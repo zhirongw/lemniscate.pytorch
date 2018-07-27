@@ -3,7 +3,7 @@
 This repo constains the pytorch implementation for the CVPR2018 unsupervised learning paper [(arxiv)](https://arxiv.org/pdf/1805.01978.pdf).
 
 ```
-@inproceedings{wu2018unsupervised2018,
+@inproceedings{wu2018unsupervised,
   title={Unsupervised Feature Learning via Non-parametric Instance-level Discrimination},
   author={Wu, Zhirong and Xiong, Yuanjun and Yu, Stella and Lin, Dahua},
   booktitle={Computer Vision and Pattern Recognition (CVPR) 2018},
