@@ -4,9 +4,9 @@ This repo constains the pytorch implementation for the CVPR2018 unsupervised lea
 
 ```
 @inproceedings{wu2018unsupervised,
-  title={Unsupervised Feature Learning via Non-parametric Instance-level Discrimination},
-  author={Wu, Zhirong and Xiong, Yuanjun and Yu, Stella and Lin, Dahua},
-  booktitle={Computer Vision and Pattern Recognition (CVPR) 2018},
+  title={Unsupervised Feature Learning via Non-Parametric Instance Discrimination},
+  author={Wu, Zhirong and Xiong, Yuanjun and Stella, X Yu and Lin, Dahua},
+  booktitle={Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition},
   year={2018}
 }
 ```
