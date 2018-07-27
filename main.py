@@ -218,18 +218,16 @@ def train(train_loader, model, lemniscate, criterion, optimizer, epoch):
         data_time.update(time.time() - end)
 
         index = index.cuda(async=True)
-        input_var = torch.autograd.Variable(input)
-        index_var = torch.autograd.Variable(index)
 
         # compute output
-        feature = model(input_var)
-        output = lemniscate(feature, index_var)
-        loss = criterion(output, index_var) / args.iter_size
+        feature = model(input)
+        output = lemniscate(feature, index)
+        loss = criterion(output, index) / args.iter_size
 
         loss.backward()
 
         # measure accuracy and record loss
-        losses.update(loss.data[0] * args.iter_size, input.size(0))
+        losses.update(loss.item() * args.iter_size, input.size(0))
 
         if (i+1) % args.iter_size == 0:
             # compute gradient and do SGD step

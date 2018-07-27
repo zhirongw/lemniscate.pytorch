@@ -52,8 +52,7 @@ class AliasMethod(object):
         '''
         K = self.alias.size(0)
 
-        #kk = torch.LongTensor(np.random.randint(0,K, size=N))
-        kk = torch.LongTensor(N).random_(0, K)
+        kk = torch.zeros(N, dtype=torch.long, device=self.prob.device).random_(0, K)
         prob = self.prob.index_select(0, kk)
         alias = self.alias.index_select(0, kk)
         # b is whether a random number is greater than q

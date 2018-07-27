@@ -76,7 +76,7 @@ class NCEAverage(nn.Module):
         self.nLem = outputSize
         self.unigrams = torch.ones(self.nLem)
         self.multinomial = AliasMethod(self.unigrams)
-#        self.multinomial.cuda()
+        self.multinomial.cuda()
         self.K = K
 
         self.register_buffer('params',torch.tensor([K, T, -1, momentum]));
@@ -85,7 +85,7 @@ class NCEAverage(nn.Module):
  
     def forward(self, x, y):
         batchSize = x.size(0)
-        idx = self.multinomial.draw(batchSize * (self.K+1)).view(batchSize, -1).cuda()
+        idx = self.multinomial.draw(batchSize * (self.K+1)).view(batchSize, -1)
         out = NCEFunction.apply(x, y, self.memory, idx, self.params)
         return out
 
