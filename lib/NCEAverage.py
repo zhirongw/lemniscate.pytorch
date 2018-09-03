@@ -1,7 +1,7 @@
 import torch
 from torch.autograd import Function
 from torch import nn
-from alias_multinomial import AliasMethod
+from .alias_multinomial import AliasMethod
 import math
 
 class NCEFunction(Function):
