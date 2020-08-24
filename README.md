@@ -2,14 +2,21 @@
 
 This repo constains the pytorch implementation for the CVPR2018 unsupervised learning paper [(arxiv)](https://arxiv.org/pdf/1805.01978.pdf).
 
-```
-@inproceedings{wu2018unsupervised,
-  title={Unsupervised Feature Learning via Non-Parametric Instance Discrimination},
-  author={Wu, Zhirong and Xiong, Yuanjun and Stella, X Yu and Lin, Dahua},
-  booktitle={Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition},
-  year={2018}
-}
-```
+## Updated Pretrained Model
+
+An updated instance discrimination model with memory bank implementation and with nce-k=65536 negatives is provided.
+The updated model is trained with Softmax-CE loss as in CPC/MoCo instead of the original NCE loss.
+
+- [ResNet 50](https://frontiers.blob.core.windows.net/pretraining/checkpoints/pil_pretrained_models/lemniscate/lemniscate_resnet50_update.pth) (Linear ImageNet Acc 58.5%)
+
+
+**Oldies**: original releases of ResNet18 and ResNet50 trained with 4096 negatives and the NCE loss.
+Each tar ball contains the feature representation of all ImageNet training images (600 mb) and model weights (100-200mb).
+You can also get these representations by forwarding the network for the entire ImageNet images.
+
+- [ResNet 18](https://frontiers.blob.core.windows.net/pretraining/checkpoints/pil_pretrained_models/lemniscate/lemniscate_resnet18.pth) (top 1 nearest neighbor accuracy 41.0%)
+- [ResNet 50](https://frontiers.blob.core.windows.net/pretraining/checkpoints/pil_pretrained_models/lemniscate/lemniscate_resnet50.pth) (top 1 nearest neighbor accuracy 46.8%)
+
 
 ## Highlight
 
@@ -17,15 +24,6 @@ This repo constains the pytorch implementation for the CVPR2018 unsupervised lea
 - Feature encodings can be as compact as 128 dimension for each image.
 - Enjoys the benefit of advanced architectures and techniques from supervised learning.
 - Runs seamlessly with nearest neighbor classifiers.
-
-## Pretrained Model
-
-Currently, we provide pretrained models of ResNet 18 and ResNet 50. 
-Each tar ball contains the feature representation of all ImageNet training images (600 mb) and model weights (100-200mb).
-You can also get these representations by forwarding the network for the entire ImageNet images.
-
-- [ResNet 18](http://zhirongw.westus2.cloudapp.azure.com/models/lemniscate_resnet18.pth.tar) (top 1 accuracy 41.0%)
-- [ResNet 50](http://zhirongw.westus2.cloudapp.azure.com/models/lemniscate_resnet50.pth.tar) (top 1 accuracy 46.8%)
 
 ## Nearest Neighbor
 
@@ -64,6 +62,17 @@ Please refer to the official repo for details of data preparation and hardware c
 
   `python cifar.py --nce-k 0 --nce-t 0.1 --lr 0.03`
 
+
+## Citation
+
+```
+@inproceedings{wu2018unsupervised,
+  title={Unsupervised Feature Learning via Non-Parametric Instance Discrimination},
+  author={Wu, Zhirong and Xiong, Yuanjun and Stella, X Yu and Lin, Dahua},
+  booktitle={Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition},
+  year={2018}
+}
+```
 
 ## Contact
 
