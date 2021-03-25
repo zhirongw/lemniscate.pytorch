@@ -7,10 +7,7 @@ class CIFAR10Instance(datasets.CIFAR10):
     """CIFAR10Instance Dataset.
     """
     def __getitem__(self, index):
-        if self.train:
-            img, target = self.train_data[index], self.train_labels[index]
-        else:
-            img, target = self.test_data[index], self.test_labels[index]
+        img, target = self.data[index], self.targets[index]
 
         # doing this so that it is consistent with all other datasets
         # to return a PIL Image

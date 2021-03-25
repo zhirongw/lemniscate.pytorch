@@ -217,7 +217,7 @@ def train(train_loader, model, lemniscate, criterion, optimizer, epoch):
         # measure data loading time
         data_time.update(time.time() - end)
 
-        index = index.cuda(async=True)
+        index = index.cuda(non_blocking=True)
 
         # compute output
         feature = model(input)
